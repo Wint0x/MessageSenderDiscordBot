@@ -10,5 +10,5 @@ A discord bot that allows the user to send messages in text channels.
 > discord.py <br/>
 > requests <br/>
 
-python -m pip install requests <br/>
-py -3 -m pip install -U discord.py
+<em>python -m pip install requests</em> <br/>
+<em>py -3 -m pip install -U discord.py</em>
