@@ -2,7 +2,8 @@ import discord
 import sys
 
 # Initialize your bot client
-client = discord.Client()
+intents = discord.Intents.default()
+client = discord.Client(intents=intents)
 
 # Replace 'YOUR_DISCORD_ID' with your own Discord user ID
 # BOT_OWNER_ID = 'YOUR_DISCORD_ID'
@@ -100,4 +101,4 @@ async def on_ready():
 
 
 TOKEN = "YOUR TOKEN HERE"
-client.run(TOKEN)
+client.run(TOKEN, log_handler=None) #Remove or set to True if you want to keep logging
