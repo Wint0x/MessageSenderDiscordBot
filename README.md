@@ -1,5 +1,7 @@
 # MessageSenderDiscordBot
-A discord bot that allows the user to send messages in text channels.
+Python script that allows the user to impersonate a discord bot.<br/>
+You can choose a guild (if the bot is present) and select a channel to send messages.<br/>
+It is also possible to use the bot to send DMs to guild members if they allow it.
 
 ## USAGE
 1. Insert your own TOKEN at the end of the script. <br/>
