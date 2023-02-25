@@ -63,8 +63,7 @@ async def on_ready():
                 if guild[0] == id:
                     current_guild = guild[1] #guild[1] has the corresponding guild id
                 else:
-                    print("\nInvalid guild\n")
-                    continue
+                    raise Exception("\nInvalid guild\n")
             break
         except Exception as ex:
             print("\n" + str(ex) + "\n")
