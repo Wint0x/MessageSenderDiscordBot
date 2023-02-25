@@ -1,3 +1,5 @@
+""" PYTHON VERSION: Python 3.10.4"""
+
 import discord
 import sys
 
