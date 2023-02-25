@@ -8,4 +8,6 @@ A discord bot that allows the user to send messages in text channels.
 
 > ### Requirement
 > discord.py <br/>
+> requests <br/>
+> python -m pip install requests <br/>
 > py -3 -m pip install -U discord.py
