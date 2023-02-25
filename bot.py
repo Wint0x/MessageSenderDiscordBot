@@ -2,9 +2,12 @@
 
 import discord
 import sys
+import requests
+import json
 
 # Initialize your bot client
 intents = discord.Intents.default()
+intents.members = True
 client = discord.Client(intents=intents)
 
 async def check_channel_permissions(guild, channel):
@@ -66,7 +69,7 @@ async def on_ready():
                     raise Exception("\nInvalid guild\n")
             break
         except Exception as ex:
-            print("\n" + str(ex) + "\n")
+            print("\n" + str(ex))
     
     while True:
         # Show available channels here
@@ -99,16 +102,90 @@ async def on_ready():
 
         # Send message loop
         while True:
+            stop_dm = False
+            
             msg = ""
             msg = input("Message to send: ")
 
-            if msg == "shutdown":
+            """COMMANDS"""
+            if msg == "^SHUTDOWN":
                 await shutdown()
                 sys.exit(0)
+
+            #Random english word with API
+            if "^RANDOM" in msg:
                 
+                url = "https://random-word-api.herokuapp.com/word"
+                r = requests.get(url)
+                j = json.loads(r.content)
+
+                msg = msg.replace("^RANDOM", j[0])
+
+            #DM
+            if msg == "^DM":
+                try:
+                    members = client.get_guild(current_guild).members
+                    
+                except Exception as ex:
+                    print(ex)
+                    continue
+                
+                all_members = []
+
+                #Fetch members
+                m_index = 0
+                for m in members:
+                    if not m.bot:
+                        all_members.append((m_index, f"{m.name}#{m.discriminator}", m.id))
+                        m_index += 1
+
+                #Show member list
+                print("\n#####")
+                print("Guild Members:")
+
+                for m in all_members:
+                    print(f"[{m[0]}] {m[1]}")
+                print("#####\n")
+                
+                while True:
+                    try:
+                        select_member = int(input("Enter member index: "))
+
+                        #If doesn't exists
+                        exists = select_member in [m[0] for m in all_members]
+
+                        if not exists:
+                            raise Exception("Invalid user!")
+
+                        get_members = [m[2] for m in all_members]
+                        
+                        target_member = await client.fetch_user(get_members[select_member])
+                        target_member_channel = await target_member.create_dm()
+                        
+                        dm_msg = ""
+                        print("\nEnstablishing communication...\n")
+
+                        while dm_msg != "^END":
+                            dm_msg = input("Enter message to send (^END to stop): ")
+
+                            if not dm_msg == "^END":
+                                await target_member_channel.send(dm_msg)
+
+                        stop_dm = True
+                        break
+                    except Exception as ex:
+                        print("\n" + str(ex) + "\n")
+
+            #After we're done sending DMs, return to channel browser
+            if stop_dm:
+                break
+            
+            #STOP SENDING MESSAGES AND GO BACK TO CHANNELS BROWSER    
             if msg == "^END":
                 print("\nChanging channel...\n")
                 break
+
+            #Send message
             else:
                 try:
                         await channel.send(msg)
