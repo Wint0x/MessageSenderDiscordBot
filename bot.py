@@ -14,15 +14,14 @@ async def check_channel_permissions(guild, channel):
             permissions = channel.permissions_for(bot_member)
             return permissions.send_messages
                 
-async def get_all_channel_ids():
+async def get_all_channel_ids(guild_id):
 
-    guilds = client.guilds
-    current_guild = guilds[0] #Not the best way but works fine if the bot is present in only one guild.
-
+    current_guild = client.get_guild(guild_id)
+    
     channel_ids = []
 
     idx = 0
-    for channel in current_guild.channels:
+    for channel in current_guild.text_channels:
 
         if await check_channel_permissions(current_guild, channel):
                 channel_ids.append((idx, channel.name, channel.id))
@@ -48,11 +47,33 @@ async def on_ready():
     # This will be called when the bot connects to Discord
     print(f"Logged in as {full_username}\n")
 
+    #Show guilds
+    print("Available guilds:")
+    guilds = [(index, guild.id, guild.name) for index,guild in enumerate(client.guilds)]
+
+    for guild in guilds:
+        print(f"[{guild[0]}] {guild[2]}")
+    
+    #Select guild
+    while True:
+        try:
+            id = int(input("\nChoose guild by number: "))
+
+            for guild in guilds:
+                if guild[0] == id:
+                    current_guild = guild[1] #guild[1] has the corresponding guild id
+                else:
+                    print("\nInvalid guild\n")
+                    continue
+            break
+        except Exception as ex:
+            print("\n" + str(ex) + "\n")
+    
     while True:
         # Show available channels here
-        print("Available channels:")
+        print("\nAvailable channels:")
 
-        all_channels = await get_all_channel_ids()
+        all_channels = await get_all_channel_ids(current_guild)
         target = ""
 
         for channel in all_channels:
@@ -95,6 +116,5 @@ async def on_ready():
                 except:
                         print("\n403 Forbidden, please choose another channel\n")
 
-
 TOKEN = "YOUR TOKEN HERE"
-client.run(TOKEN, log_handler=None) #Change parameters accordingly
+client.run(TOKEN, log_handler=None)
