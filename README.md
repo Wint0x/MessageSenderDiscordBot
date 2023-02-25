@@ -6,8 +6,9 @@ A discord bot that allows the user to send messages in text channels.
 2. Invite the bot in your server. <br/>
 3. Run and enjoy.
 
-> ### Requirement
+## Requirements
 > discord.py <br/>
 > requests <br/>
-> python -m pip install requests <br/>
-> py -3 -m pip install -U discord.py
+
+python -m pip install requests <br/>
+py -3 -m pip install -U discord.py
