@@ -17,7 +17,7 @@ async def check_channel_permissions(guild, channel):
 async def get_all_channel_ids():
 
     guilds = client.guilds
-    current_guild = guilds[0]
+    current_guild = guilds[0] #Not the best way but works fine if the bot is present in only one guild.
 
     channel_ids = []
 
