@@ -97,4 +97,4 @@ async def on_ready():
 
 
 TOKEN = "YOUR TOKEN HERE"
-client.run(TOKEN, log_handler=None) #Remove or set to True if you want to keep logging
+client.run(TOKEN, log_handler=None) #Change parameters accordingly
