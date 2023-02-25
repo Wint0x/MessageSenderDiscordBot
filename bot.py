@@ -7,12 +7,6 @@ import sys
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 
-# Replace 'YOUR_DISCORD_ID' with your own Discord user ID
-# BOT_OWNER_ID = 'YOUR_DISCORD_ID'
-
-# Initialize a flag variable to track whether the bot is waiting for input
-awaiting_input = False
-
 async def check_channel_permissions(guild, channel):
     bot_member = guild.me
 
