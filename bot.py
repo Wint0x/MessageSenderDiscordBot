@@ -49,7 +49,16 @@ async def on_connect():
 async def on_ready():
     # This will be called when the bot connects to Discord
     print(f"Logged in as {full_username}\n")
-
+    
+    #Change bot's activity
+    activity = discord.Activity(type=discord.ActivityType.watching, name="Funny Memes")
+    await client.change_presence(status = discord.Status.online, activity = activity)
+    """ 
+    discord.Status.online
+    discord.Status.idle
+    discord.Status.dnd (Do Not Disturb)
+    discord.Status.invisible
+    """
     #Show guilds
     print("Available guilds:")
     guilds = [(index, guild.id, guild.name) for index,guild in enumerate(client.guilds)]
